@@ -40,6 +40,7 @@ display/log only failed check/ suppress passed checks
 -r [report.json]
 ```
 log also to json file additional to console output
+
 ![Image of report mode](https://i.ibb.co/gTyktf4/report-mode.jpg)
 ![Image of report mode](https://i.ibb.co/yhqHVHK/report-file.jpg)
 
