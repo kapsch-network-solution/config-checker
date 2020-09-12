@@ -18,12 +18,16 @@ python main.py -b [baseline.yaml] -c [connection.yaml]
 ```
 
 ## Offline mode
+![Image of of offline](https://i.ibb.co/7NJrgRq/offline-mode.jpg)
+
 check config files in directory (one per device) against baseline.yaml file. Please notice that only "show run" output can be checked in offline mode
 ```
 python main.py -b [baseline.yaml] -d [config directory]
 ```
 
 ## Optional parameters
+![Image of of failed mode](https://i.ibb.co/SPMhHqc/failed-mode.jpg)
+
 ```
 -f
 ```
