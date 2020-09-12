@@ -1,0 +1,21 @@
+---
+global_commands:
+  - hostname
+  - logging host
+interface_commands:
+  - switchport mode access
+  - switchport access vlan
+  - ip address dhcp
+uplink_interface_commands:
+  - switchport nonegotiate
+  - ip dhcp snooping trust
+interface_exclude:
+  - Gigabitethernet0/0
+  - Loop10
+show_commands:
+     version:
+      - "16.12.03"
+      # config register
+      - "0x2102"
+     cdp neighbor:
+      - CORESW01

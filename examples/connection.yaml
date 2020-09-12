@@ -1,0 +1,15 @@
+device:
+    csr1000v:
+        device_type: cisco_xe
+        ip: 10.0.0.112
+        username: admin
+        password: admin
+        port: 22
+        secret: admin
+    csr1000v_without_enable:
+        device_type: cisco_xe
+        ip: 10.0.0.111
+        username: admin
+        password: admin
+        port: 22
+        secret: ""

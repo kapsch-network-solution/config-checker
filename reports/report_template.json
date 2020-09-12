@@ -1,0 +1,59 @@
+{
+    "device":{
+        "csr1000v":{
+            "global":{
+                "TESTS":{
+                    "hostname":"PASS",
+                    "logging host":"PASS"
+                }
+            },
+            "interfaces":{
+                "Gigabitethernet 1/0/1":{
+                    "TESTS":{
+                        "switchport mode access":"PASS",
+                        "switchport nonegotiate":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                },
+                "Gigabitethernet 1/0/2":{
+                    "TESTS":{
+                        "switchport mode access":"PASS",
+                        "switchport nonegotiate":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                }
+                ,
+                "Gigabitethernet 1/0/3":{
+                    "TESTS":{
+                        "switchport mode access":"PASS",
+                        "switchport nonegotiate":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                }
+            },
+            "uplink_interfaces":{
+                "Gigabitethernet 1/1/1":{
+                    "TESTS":{
+                        "ip dhcp snooping trust":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                }
+            },
+            "show_commands":{
+                "show version":{
+                    "TESTS":{
+                        "16.12.2s":"PASS",
+                        "0x2102":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                },
+                "show cdp neighbor":{
+                    "TESTS":{
+                        "CORESW-01":"PASS"
+                    },
+                    "RAW_DATA":"switchport config whatever"
+                }
+            }
+        }   
+    }
+}
