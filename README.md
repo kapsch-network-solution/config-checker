@@ -10,6 +10,7 @@ prettytable==0.7.2
 pyaml==20.4.0
 
 ## Online mode
+![Image of online mode](https://i.ibb.co/ByW9Tvw/online-mode.jpg)
 connect to device defined n connection.yaml file via ssh and collect "show run" and additional show command output and check against config in baseline.yaml 
 ```
 python main.py -b [baseline.yaml] -c [connection.yaml]
