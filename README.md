@@ -2,8 +2,11 @@
 
 ## Requirements
 netmiko==3.2.0
+
 paramiko==2.7.1
+
 prettytable==0.7.2
+
 pyaml==20.4.0
 
 ## Online mode
