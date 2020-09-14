@@ -54,7 +54,9 @@ def  func_check_interface_export(content,baseline_config,options):
             # check if interface is excluded and set flag
             if ("interface_exclude" in baseline_config):
                 for exclude in baseline_config['interface_exclude']:
-                    if interface_name[0] == "interface "+exclude:
+                    #print("Match: " + exclude + " against " + interface_name[0])
+                    if re.findall(exclude,interface_name[0]):
+                        #print("Match found")
                         exclude_interface = True
             
             #check if interface is trunk and set flag
@@ -69,7 +71,7 @@ def  func_check_interface_export(content,baseline_config,options):
             if exclude_interface:
                 if options['failed_only'] == False:
                     dict_interfaces_excluded[interface_name[0][10:]] = {}
-                    break
+                    #break
                 
             elif trunk_interface == True:
                 for command in baseline_config['uplink_interface_commands']:
@@ -105,6 +107,7 @@ def  func_check_interface_export(content,baseline_config,options):
         dict_type["TRUNK"]=dict_interfaces_trunk
         dict_type["EXCLUDED"]= dict_interfaces_excluded
         
+        print(dict_type["EXCLUDED"])
     return dict_type
 
 def func_check_data(content,baseline_config,options):
