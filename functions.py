@@ -107,7 +107,6 @@ def  func_check_interface_export(content,baseline_config,options):
         dict_type["TRUNK"]=dict_interfaces_trunk
         dict_type["EXCLUDED"]= dict_interfaces_excluded
         
-        print(dict_type["EXCLUDED"])
     return dict_type
 
 def func_check_data(content,baseline_config,options):
