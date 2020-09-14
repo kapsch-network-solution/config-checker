@@ -256,7 +256,8 @@ def func_print_database(data):
 
 
 def banner():
-    print("######################################")
-    print("### config checker v0.1           ####")
-    print("### Paul Freitag                  ####")
-    print("######################################")
+    print("############################################")
+    print("### config checker v0.2                 ####")
+    print("### Paul Freitag                        ####")
+    print("### github.com/catachan/config-checker  ####")
+    print("############################################")
