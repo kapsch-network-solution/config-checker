@@ -1,5 +1,7 @@
 # device-checker
 
+A script that connects to network devices and checks for the presence of commands (globally/per interface) defined in a basline file
+
 ## Requirements
 netmiko==3.2.0
 
