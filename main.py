@@ -53,8 +53,8 @@ elif "connection_yaml" in options:
         print("Connecting to " + device +" ("+devices['device'][device]['ip']+") ...")
        
 
-        try:
-        
+        #try:
+        if True:
             con_device = ConnectHandler(
                 device_type=devices['device'][device]['device_type'], 
                 ip=devices['device'][device]['ip'], 
@@ -69,7 +69,7 @@ elif "connection_yaml" in options:
             if "show_commands" in baseline_config:
                 for show_commands in baseline_config['show_commands']:
                     show_command_output[show_commands]=con_device.send_command("show " + show_commands)
-               
+                    
             con_device.disconnect()
 
             #check and print data
@@ -78,8 +78,8 @@ elif "connection_yaml" in options:
 
             print("     Done ...")
 
-        except:
-            print("     Something went wrong. Maybe node is not reachable")
+        #except:
+        #    print("     Something went wrong. Maybe node is not reachable")
 
 else:    
     print("Unknown Error --> you should never see this")
@@ -94,4 +94,4 @@ if "reporting" in options:
             json.dump(data, outfile)
 
 # print data
-functions.func_print_database(data)
+#functions.func_print_database(data)

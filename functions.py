@@ -170,16 +170,21 @@ def func_check_show(show_command_output,baseline_config,options):
     
     result_show = {}
 
+    print(show_command_output)
+    print(baseline_config['show_commands'])
+
     if "show_commands" in baseline_config:
         for show_commands in baseline_config['show_commands']:
         
             result_show[show_commands] = {}
             result_show[show_commands]["TESTS"] = {}
 
+            print("now: " + show_commands)
             for test in baseline_config['show_commands'][show_commands]:
-
+                print("SHOW:" +  show_command_output[show_commands])
+                print( test)
                 result = re.findall(test,show_command_output[show_commands],re.DOTALL)
-                
+                print("Result: " + result)
                 if result:
                     if options['failed_only'] == False:
                         result_show[show_commands]["TESTS"][test] = { "Result" : "PASS"}
