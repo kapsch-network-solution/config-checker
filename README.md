@@ -24,6 +24,11 @@ Create virtual enviroment (optional)
 ``` 
 python3 -m venv config-checker
 source config-checker/bin/activate
+```
+
+install dependencies
+
+```
 pip install -r requirements.txt 
 ```
 
