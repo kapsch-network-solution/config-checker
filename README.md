@@ -12,6 +12,17 @@ prettytable==0.7.2
 
 pyaml==20.4.0
 
+## Installation
+
+``` git clone https://github.com/catachan/config-checker.git
+``` cd config-checker
+
+Create virtual enviroment (optional)
+
+``` python3 -m venv config-checker
+``` source config-checker/bin/activate
+``` pip install -r requirements.txt 
+
 ## Online mode
 connect to device defined in connection.yaml file via ssh and collect "show run" and additional show command output and check against config in baseline.yaml 
 
