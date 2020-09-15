@@ -25,7 +25,7 @@ Create virtual enviroment (optional)
 python3 -m venv config-checker
 source config-checker/bin/activate
 pip install -r requirements.txt 
-``
+```
 
 ## Online mode
 connect to device defined in connection.yaml file via ssh and collect "show run" and additional show command output and check against config in baseline.yaml 
