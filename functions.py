@@ -190,72 +190,90 @@ def func_check_show(show_command_output,baseline_config,options):
     
     return result_show
 
+def func_check_device_info(device_info):
+    info = {}
+
+    #check model number
+    result = re.findall("Model Number.*",device_info,re.DOTALL)
+
+    if result:
+        model = result[0]
+        info["MODEL"] = model[model.rfind(":")+2:]
+    else:
+        info["MODEL"] = "UNKNOWN"
+
+    return info
 
 def func_print_database(data):
 
-    #print file or divice
+    #print file or device
     for section in data:
         for device in data[section]:
-            print("############################")
+            print("\n############################")
             print("#### "+device)
-            print("############################")
+            
+            if data[section][device] == "ERROR":
+                print("############################")
+                print("Device was offline or other error occured !")
+            else:
+                print("#### Type: " + data[section][device]["DEVICE_INFO"]["MODEL"])
+                print("############################")
+                table = PrettyTable()
+                table.field_names = ["scope","command","type","result"]
 
-            table = PrettyTable()
-            table.field_names = ["scope","command","type","result"]
-
-            #print global section
-            if "GLOBAL" in data[section][device]:
-                rows=False
-                for section2 in data[section][device]["GLOBAL"]:
-                    for command in data[section][device]["GLOBAL"][section2]:
-                        table.add_row(["GLOBAL",section2,"GLOBAL",data[section][device]["GLOBAL"][section2][command]])
-                        rows=True
-                
-                if rows:
-                    table.add_row(["","","",""])
-                
-
-            if "INTERFACES" in data[section][device]:
-                rows=False   
-                for interface_types in data[section][device]["INTERFACES"]:     
-                    if interface_types == "EXCLUDED":
-                        for interface_name in data[section][device]["INTERFACES"][interface_types]:                           
-                            table.add_row([interface_name,"","","EXCLUDED"])
+                #print global section
+                if "GLOBAL" in data[section][device]:
+                    rows=False
+                    for section2 in data[section][device]["GLOBAL"]:
+                        for command in data[section][device]["GLOBAL"][section2]:
+                            table.add_row(["GLOBAL",section2,"GLOBAL",data[section][device]["GLOBAL"][section2][command]])
                             rows=True
-                    elif interface_types == "ACCESS":
-                        for interface_name in data[section][device]["INTERFACES"][interface_types]:
-                            for section3 in data[section][device]["INTERFACES"][interface_types][interface_name]:
-                                if section3 == "TESTS":
-                                    for commands in data[section][device]["INTERFACES"][interface_types][interface_name][section3]:
-                                        table.add_row([interface_name,commands,"ACCESS",data[section][device]["INTERFACES"][interface_types][interface_name][section3][commands]["RESULT"]])
-                                        rows=True
-                    else:
-                        for interface_name in data[section][device]["INTERFACES"][interface_types]:
-                            for section3 in data[section][device]["INTERFACES"][interface_types][interface_name]:
-                                if section3 == "TESTS":
-                                    for commands in data[section][device]["INTERFACES"][interface_types][interface_name][section3]:
-                                        table.add_row([interface_name,commands,"TRUNK",data[section][device]["INTERFACES"][interface_types][interface_name][section3][commands]["RESULT"]])
-                                        rows=True
-                
-                if rows: 
-                    table.add_row(["","","",""])
+                    
+                    if rows:
+                        table.add_row(["","","",""])
+                    
 
-            if "SHOW_COMMANDS" in data[section][device]:
-                
-                for show_commands in data[section][device]["SHOW_COMMANDS"]:
-                    for sections in data[section][device]["SHOW_COMMANDS"][show_commands]:
-                        
-                        if sections == "TESTS":
-                            for test in data[section][device]["SHOW_COMMANDS"][show_commands][sections]:
-                                table.add_row([show_commands,test,"SHOW",data[section][device]["SHOW_COMMANDS"][show_commands][sections][test]["Result"]])
+                if "INTERFACES" in data[section][device]:
+                    rows=False   
+                    for interface_types in data[section][device]["INTERFACES"]:     
+                        if interface_types == "EXCLUDED":
+                            for interface_name in data[section][device]["INTERFACES"][interface_types]:                           
+                                table.add_row([interface_name,"","","EXCLUDED"])
+                                rows=True
+                        elif interface_types == "ACCESS":
+                            for interface_name in data[section][device]["INTERFACES"][interface_types]:
+                                for section3 in data[section][device]["INTERFACES"][interface_types][interface_name]:
+                                    if section3 == "TESTS":
+                                        for commands in data[section][device]["INTERFACES"][interface_types][interface_name][section3]:
+                                            table.add_row([interface_name,commands,"ACCESS",data[section][device]["INTERFACES"][interface_types][interface_name][section3][commands]["RESULT"]])
+                                            rows=True
+                        else:
+                            for interface_name in data[section][device]["INTERFACES"][interface_types]:
+                                for section3 in data[section][device]["INTERFACES"][interface_types][interface_name]:
+                                    if section3 == "TESTS":
+                                        for commands in data[section][device]["INTERFACES"][interface_types][interface_name][section3]:
+                                            table.add_row([interface_name,commands,"TRUNK",data[section][device]["INTERFACES"][interface_types][interface_name][section3][commands]["RESULT"]])
+                                            rows=True
+                    
+                    if rows: 
+                        table.add_row(["","","",""])
 
-            print(table)
+                if "SHOW_COMMANDS" in data[section][device]:
+                    
+                    for show_commands in data[section][device]["SHOW_COMMANDS"]:
+                        for sections in data[section][device]["SHOW_COMMANDS"][show_commands]:
+                            
+                            if sections == "TESTS":
+                                for test in data[section][device]["SHOW_COMMANDS"][show_commands][sections]:
+                                    table.add_row([show_commands,test,"SHOW",data[section][device]["SHOW_COMMANDS"][show_commands][sections][test]["Result"]])
+
+                print(table)
             print("\n")
 
 
 def banner():
     print("############################################")
-    print("### config checker v0.2                 ####")
+    print("### config checker v0.3                 ####")
     print("### Paul Freitag                        ####")
     print("### github.com/catachan/config-checker  ####")
-    print("############################################")
+    print("############################################\n")

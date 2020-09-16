@@ -48,11 +48,9 @@ elif "connection_yaml" in options:
 
     # loop through devices 
     for device in devices['device']:
-
         
         print("Connecting to " + device +" ("+devices['device'][device]['ip']+") ...")
        
-
         try:
             con_device = ConnectHandler(
                 device_type=devices['device'][device]['device_type'], 
@@ -64,21 +62,25 @@ elif "connection_yaml" in options:
             con_device.enable()
 
             content = con_device.send_command("show running-config")
-        
+            
             if "show_commands" in baseline_config:
                 for show_commands in baseline_config['show_commands']:
                     show_command_output[show_commands]=con_device.send_command("show " + show_commands)
-                    
+
+            device_info  = con_device.send_command("show version")  
+              
             con_device.disconnect()
 
             #check and print data
             data["DEVICE"][device] = functions.func_check_data(content,baseline_config,options)
             data["DEVICE"][device]["SHOW_COMMANDS"] = functions.func_check_show(show_command_output,baseline_config,options)
+            data["DEVICE"][device]["DEVICE_INFO"] = functions.func_check_device_info(device_info)
 
             print("     Done ...")
 
         except:
             print("     Something went wrong. Maybe node is not reachable")
+            data["DEVICE"][device] = "ERROR"
 
 else:    
     print("Unknown Error --> you should never see this")
