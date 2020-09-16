@@ -3,6 +3,7 @@ import sys
 import re
 import yaml
 import json
+import logging
 from prettytable import PrettyTable
 
 def func_check_global_export(content,baseline_config,options):
@@ -136,6 +137,7 @@ def func_get_arguments():
     # default values for optional switches
     options['failed_only']=False
     options['reporting']=False
+    options['logging']=False
 
     #parse through arguments and fill citionary with value pairs
     for argument in sys.argv:
@@ -150,6 +152,8 @@ def func_get_arguments():
             options['failed_only']=True
         elif argument == "-r":
             options['reporting']= sys.argv[i]
+        elif argument == "-l":
+            options['logging']= sys.argv[i]
     
 
     if "baseline_yaml" not in options:  
@@ -204,20 +208,20 @@ def func_check_device_info(device_info):
 
     return info
 
-def func_print_database(data):
+def func_print_database(data,options,a_logger):
 
     #print file or device
     for section in data:
         for device in data[section]:
-            print("\n############################")
-            print("#### "+device)
+            a_logger.info("\n############################")
+            a_logger.info("#### "+device)
             
             if data[section][device] == "ERROR":
-                print("############################")
-                print("Device was offline or other error occured !")
+                a_logger.info("############################")
+                a_logger.info("Device was offline or other error occured !")
             else:
-                print("#### Type: " + data[section][device]["DEVICE_INFO"]["MODEL"])
-                print("############################")
+                a_logger.info("#### Type: " + data[section][device]["DEVICE_INFO"]["MODEL"])
+                a_logger.info("############################")
                 table = PrettyTable()
                 table.field_names = ["scope","command","type","result"]
 
@@ -267,13 +271,12 @@ def func_print_database(data):
                                 for test in data[section][device]["SHOW_COMMANDS"][show_commands][sections]:
                                     table.add_row([show_commands,test,"SHOW",data[section][device]["SHOW_COMMANDS"][show_commands][sections][test]["Result"]])
 
-                print(table)
-            print("\n")
+                a_logger.info(table)
+            a_logger.info("\n")
 
-
-def banner():
-    print("############################################")
-    print("### config checker v0.3                 ####")
-    print("### Paul Freitag                        ####")
-    print("### github.com/catachan/config-checker  ####")
-    print("############################################\n")
+def banner(a_logger):
+    a_logger.info("############################################")
+    a_logger.info("### config checker v0.3                 ####")
+    a_logger.info("### Paul Freitag                        ####")
+    a_logger.info("### github.com/catachan/config-checker  ####")
+    a_logger.info("############################################\n")

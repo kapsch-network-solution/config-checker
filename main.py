@@ -4,12 +4,27 @@ import yaml
 import json
 import sys
 from netmiko import ConnectHandler
+import logging
+import logging.handlers
 
-functions.banner()
+
 
 #get command line arguments
 options={}
 options = functions.func_get_arguments()
+
+if options['logging']!=False:
+
+    a_logger = logging.getLogger()
+    a_logger.setLevel(logging.INFO)
+    output_file_handler = logging.FileHandler(options['logging'])
+    stdout_handler = logging.StreamHandler(sys.stdout)
+
+    a_logger.addHandler(output_file_handler)
+    a_logger.addHandler(stdout_handler)
+
+
+functions.banner(a_logger)
 
 #load yaml file with baseline config
 baseline_yaml_file = open(options['baseline_yaml'])
@@ -49,7 +64,7 @@ elif "connection_yaml" in options:
     # loop through devices 
     for device in devices['device']:
         
-        print("Connecting to " + device +" ("+devices['device'][device]['ip']+") ...")
+        a_logger.info("Connecting to " + device +" ("+devices['device'][device]['ip']+") ...")
        
         try:
             con_device = ConnectHandler(
@@ -76,14 +91,14 @@ elif "connection_yaml" in options:
             data["DEVICE"][device]["SHOW_COMMANDS"] = functions.func_check_show(show_command_output,baseline_config,options)
             data["DEVICE"][device]["DEVICE_INFO"] = functions.func_check_device_info(device_info)
 
-            print("     Done ...")
+            a_logger.info("     Done ...")
 
         except:
-            print("     Something went wrong. Maybe node is not reachable")
+            a_logger.info("     Something went wrong. Maybe node is not reachable")
             data["DEVICE"][device] = "ERROR"
 
 else:    
-    print("Unknown Error --> you should never see this")
+    a_logger.info("Unknown Error --> you should never see this")
 
 
 
@@ -95,4 +110,4 @@ if "reporting" in options:
             json.dump(data, outfile)
 
 # print data
-functions.func_print_database(data)
+functions.func_print_database(data,options,a_logger)
