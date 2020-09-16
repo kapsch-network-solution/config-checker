@@ -194,7 +194,7 @@ def func_check_device_info(device_info):
     info = {}
 
     #check model number
-    result = re.findall("Model Number.*",device_info,re.DOTALL)
+    result = re.findall("Model Number.*",device_info)
 
     if result:
         model = result[0]
