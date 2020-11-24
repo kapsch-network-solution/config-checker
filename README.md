@@ -68,7 +68,7 @@ log also to json file additional to console output. The report file contains als
 ![Image of report mode](https://i.ibb.co/yhqHVHK/report-file.jpg)
 
 ```
--f [logfile.txt]
+-l [logfile.txt]
 ```
 log console output also to logfile (so you are able to see the complete output later on)
 
